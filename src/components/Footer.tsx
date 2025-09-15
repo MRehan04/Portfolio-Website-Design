@@ -33,7 +33,7 @@ export function Footer() {
           </div>
           
           <div className="text-sm text-muted-foreground">
-            © 2025 Alex Johnson. All rights reserved.
+            © 2025 Muhammad Rehan. All rights reserved.
           </div>
         </div>
       </div>

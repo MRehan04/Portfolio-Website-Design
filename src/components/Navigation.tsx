@@ -44,7 +44,7 @@ export function Navigation() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="text-xl font-semibold">
-            Alex Johnson
+            Muhammad Rehan
           </div>
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => (
