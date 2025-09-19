@@ -124,8 +124,9 @@
 
 @layer base {
 
-  @apply px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600;
-
+   * {
+    @apply border-border outline-ring/50;
+  }
   body {
     @apply bg-background text-foreground;
   }
