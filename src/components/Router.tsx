@@ -9,9 +9,41 @@ import { ProjectsSection } from './ProjectsSection.tsx';
 import { ContactSection } from './ContactSection.tsx';
 import { Footer } from './Footer.tsx';
 import { Toaster } from './UI/sonner.tsx';
+import { migrateLocalStorageProjects, initializeDefaultProjects } from '../utils/migrateProjects.ts';
+import '../utils/dbHelpers.ts'
 
 export function Router() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [migrationComplete, setMigrationComplete] = useState(false);
+
+  // Run migration once on app startup
+  useEffect(() => {
+    async function runMigration() {
+      try {
+        // First, try to migrate any existing localStorage data
+        const migrationResults = await migrateLocalStorageProjects();
+        
+        if (migrationResults.migrated > 0) {
+          console.log(`✓ Successfully migrated ${migrationResults.migrated} projects to Supabase`);
+        }
+        
+        if (migrationResults.errors.length > 0) {
+          console.warn('Migration errors:', migrationResults.errors);
+        }
+        
+        // If no projects were migrated, initialize with default projects
+        if (migrationResults.migrated === 0) {
+          await initializeDefaultProjects();
+        }
+      } catch (error) {
+        console.error('Migration process failed:', error);
+      } finally {
+        setMigrationComplete(true);
+      }
+    }
+    
+    runMigration();
+  }, []);
 
   useEffect(() => {
     const handlePopState = () => {
