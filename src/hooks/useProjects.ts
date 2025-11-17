@@ -45,21 +45,24 @@ export function useProjects() {
       throw err;
     }
   }, []);
-
-  const deleteProject = useCallback(async (id: string) => {
+const deleteProject = useCallback(async (id: string) => {
     try {
       setError(null);
-      const success = await projectsApi.deleteProject(id);
-      if (success) {
-        setProjects(prev => prev.filter(p => p.id !== id));
-        return true;
-      }
-      throw new Error('Project not found');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete project');
-      throw err;
+      // Optimistically remove from UI first
+      setProjects(prev => prev.filter(p => p.id !== id));
+      
+      // Then attempt to delete from backend
+      await projectsApi.deleteProject(id);
+      return true;
+    } catch (error) {
+      // If deletion fails, refetch to sync state
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete project';
+      console.error('Delete failed, refreshing project list:', errorMessage);
+      setError(errorMessage);
+      await fetchProjects(); // Re-sync with backend
+      throw error;
     }
-  }, []);
+  }, [fetchProjects]);
 
   useEffect(() => {
     fetchProjects();

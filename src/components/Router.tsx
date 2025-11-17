@@ -22,15 +22,15 @@ export function Router() {
       try {
         // First, try to migrate any existing localStorage data
         const migrationResults = await migrateLocalStorageProjects();
-        
+
         if (migrationResults.migrated > 0) {
           console.log(`✓ Successfully migrated ${migrationResults.migrated} projects to Supabase`);
         }
-        
+
         if (migrationResults.errors.length > 0) {
           console.warn('Migration errors:', migrationResults.errors);
         }
-        
+
         // If no projects were migrated, initialize with default projects
         if (migrationResults.migrated === 0) {
           await initializeDefaultProjects();
@@ -41,7 +41,7 @@ export function Router() {
         setMigrationComplete(true);
       }
     }
-    
+
     runMigration();
   }, []);
 
@@ -81,6 +81,19 @@ export function Router() {
         <ProjectsAdmin />
         <Toaster />
       </>
+    );
+  }
+
+
+  // Show loading state while migration is running
+  if (!migrationComplete) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mb-4" />
+          <p>Loading your portfolio...</p>
+        </div>
+      </div>
     );
   }
 
