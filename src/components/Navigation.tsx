@@ -1,8 +1,10 @@
 import { Button } from './UI/button';
 import { useState, useEffect } from 'react';
-
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from './ThemeProvider';
 export function Navigation() {
   const [activeSection, setActiveSection] = useState('hero');
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { id: 'hero', label: 'Home' },
@@ -52,20 +54,34 @@ export function Navigation() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`hover:text-primary transition-colors ${
-                  activeSection === item.id ? 'text-primary' : 'text-muted-foreground'
-                }`}
+                className={`hover:text-primary transition-colors ${activeSection === item.id ? 'text-primary' : 'text-muted-foreground'
+                  }`}
               >
                 {item.label}
               </button>
             ))}
           </div>
-          <Button
-            onClick={() => scrollToSection('contact')}
-            size="sm"
-          >
-            Get In Touch
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button
+              onClick={toggleTheme}
+              variant="ghost"
+              size="sm"
+              className="w-9 h-9 p-0"
+              aria-label="Toggle theme"
+            >
+              {theme === 'light' ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5" />
+              )}
+            </Button>
+            <Button
+              onClick={() => scrollToSection('contact')}
+              size="sm"
+            >
+              Get In Touch
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
