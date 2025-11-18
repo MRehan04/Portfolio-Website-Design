@@ -16,9 +16,9 @@ export  function HeroSection() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <ImageWithFallback
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
-              alt="Alex Johnson"
-              className="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-primary/20"
+              src="https://images.unsplash.com/photo-1742056024244-02a093dae0b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcG9ydHMlMjBjYXJ8ZW58MXx8fHwxNzYzNDU4Mjc1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+              alt="Luxury Sports Car"
+              className="w-82 h-82 rounded-full mx-auto mb-6 border-4 border-primary/20"
             />
           </div>
           
